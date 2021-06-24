@@ -1,5 +1,3 @@
-import { Exclude } from 'class-transformer';
-
 export default class User {
   id: string;
 
@@ -7,7 +5,6 @@ export default class User {
 
   email: string;
 
-  @Exclude()
   password: string;
 
   active: boolean;

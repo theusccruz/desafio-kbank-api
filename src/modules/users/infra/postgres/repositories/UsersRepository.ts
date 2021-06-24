@@ -12,11 +12,9 @@ export default class UserRepository implements IUsersRepository {
 
   public async add({ active, name, email, password }: IAddUserDTO): Promise<User> {
     const id = uuidv4();
-
     const query =
       'INSERT INTO users(id, name, email, password, active) VALUES ($1, $2, $3, $4, $5) RETURNING *';
     const values = [id, name, email, password, active];
-
     try {
       const { rows } = await this.database.query(query, values);
       const user = rows[0] as User;
@@ -60,9 +58,9 @@ export default class UserRepository implements IUsersRepository {
 
     try {
       const { rows } = await this.database.query(query);
-      const user = rows as User[];
+      const users = rows as User[];
 
-      return user;
+      return users;
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -79,15 +77,24 @@ export default class UserRepository implements IUsersRepository {
     }
   }
 
-  // public async update({
-  //   id,
-  //   email,
-  //   password,
-  //   name,
-  //   active,
-  // }: IUpdateUserDTO): Promise<User> {
-  //   const query = 'UPDATE users SET name = $1, email';
-  //   const values = [user_id];
+  public async update({
+    id,
+    email,
+    password,
+    name,
+    active,
+  }: IUpdateUserDTO): Promise<User> {
+    const query =
+      'UPDATE users SET name = $1, email = $2, password = $3, active = $4, updated_at = DEFAULT WHERE id = $5 ';
+    const values = [name, email, password, active, id];
 
-  // }
+    try {
+      const { rows } = await this.database.query(query, values);
+      const user = rows[0] as User;
+
+      return user;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
 }

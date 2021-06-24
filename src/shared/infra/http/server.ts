@@ -5,7 +5,7 @@ import cors from 'cors';
 import 'express-async-errors';
 
 import '../../container';
-import ServerError from '@shared/errors/ServerError';
+import ApiError from '@shared/errors/ApiError';
 import routes from './routes';
 
 const app = express();
@@ -16,8 +16,8 @@ app.use(routes);
 
 app.use(
   (error: Error, request: Request, response: Response, next: NextFunction): Response => {
-    if (error instanceof ServerError) {
-      return response.status(400).json({
+    if (error instanceof ApiError) {
+      return response.status(error.status).json({
         statusCode: error.status,
         message: error.message,
       });

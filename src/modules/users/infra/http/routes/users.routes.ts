@@ -7,4 +7,12 @@ const usersController = new UsersController();
 
 usersRouter.post('/', usersController.save);
 
+usersRouter.get('/:id', usersController.show);
+
+usersRouter.get('/', usersController.index);
+
+usersRouter.delete('/:id', usersController.destroy);
+
+usersRouter.put('/:id', usersController.update);
+
 export default usersRouter;
