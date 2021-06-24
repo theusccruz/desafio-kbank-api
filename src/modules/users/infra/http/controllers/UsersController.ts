@@ -83,6 +83,7 @@ export default class UsersController {
       field: password,
       ref: old_password,
       refFieldName: 'old_password',
+      length: 6,
     });
     validate.stringRef({
       fieldName: 'password_confirmation',

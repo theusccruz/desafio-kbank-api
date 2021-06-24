@@ -18,7 +18,7 @@ app.use(
   (error: Error, request: Request, response: Response, next: NextFunction): Response => {
     if (error instanceof ApiError) {
       return response.status(error.status).json({
-        statusCode: error.status,
+        status: error.status,
         message: error.message,
       });
     }
