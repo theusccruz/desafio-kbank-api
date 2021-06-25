@@ -81,14 +81,14 @@ export default class UsersService {
     old_password,
     active,
   }: IRequestUpdateUser): Promise<User> {
-    const user = await this.usersRepository.findById(user_id);
-    if (!user) {
+    const findUser = await this.usersRepository.findById(user_id);
+    if (!findUser) {
       throw new ApiError('User does not exist', 404);
     }
 
-    user.name = name;
-    user.email = email;
-    user.active = active;
+    findUser.name = name;
+    findUser.email = email;
+    findUser.active = active;
 
     if (password && old_password) {
       if (password === old_password) {
@@ -97,17 +97,17 @@ export default class UsersService {
 
       const compareOldPassword = await this.hashProvider.compare(
         old_password,
-        user.password,
+        findUser.password,
       );
       if (!compareOldPassword) {
         throw new ApiError('The old password is not match');
       }
 
       const hashedNewPassword = await this.hashProvider.generate(password, 9);
-      user.password = hashedNewPassword;
+      findUser.password = hashedNewPassword;
     }
 
-    await this.usersRepository.update(user);
+    const user = await this.usersRepository.update(findUser);
 
     return user;
   }

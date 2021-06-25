@@ -85,7 +85,7 @@ export default class UserRepository implements IUsersRepository {
     active,
   }: IUpdateUserDTO): Promise<User> {
     const query =
-      'UPDATE users SET name = $1, email = $2, password = $3, active = $4, updated_at = DEFAULT WHERE id = $5 ';
+      'UPDATE users SET name = $1, email = $2, password = $3, active = $4, updated_at = DEFAULT WHERE id = $5 RETURNING *';
     const values = [name, email, password, active, id];
 
     try {

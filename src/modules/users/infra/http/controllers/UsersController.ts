@@ -10,18 +10,25 @@ export default class UsersController {
 
     const validate = new Validate();
 
+    validate.required(email, 'email');
     validate.email(email);
+
+    validate.required(name, 'name');
     validate.string({
       fieldName: 'name',
       field: name,
       length: 15,
       isOnlyString: true,
     });
+
+    validate.required(password, 'password');
     validate.string({
       fieldName: 'password',
       field: password,
       length: 6,
     });
+
+    validate.required(active, 'active');
     validate.boolean(active, 'active');
 
     const usersService = container.resolve(UsersService);
@@ -67,16 +74,21 @@ export default class UsersController {
 
     const validate = new Validate();
 
+    validate.required(email, 'email');
     validate.email(email);
+
+    validate.required(name, 'name');
     validate.string({
       fieldName: 'name',
       field: name,
       length: 15,
       isOnlyString: true,
     });
+
     validate.string({
       fieldName: 'old_password',
       field: old_password,
+      length: 6,
     });
     validate.stringRef({
       fieldName: 'password',
@@ -93,6 +105,7 @@ export default class UsersController {
       same: password,
     });
 
+    validate.required(active, 'active');
     validate.boolean(active, 'active');
 
     const userService = container.resolve(UsersService);
