@@ -10,7 +10,10 @@ export default class SessionController {
 
     const validate = new Validate();
 
+    validate.required(email, 'email');
     validate.email(email);
+
+    validate.required(password, 'password');
     validate.string({
       fieldName: 'password',
       field: password,
