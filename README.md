@@ -1,3 +1,3 @@
 # desafio-kbank-api
 
-API REST no DB e autenticação JWT - NodeJS, Postgres e TypeScript
+API REST autenticação JWT - NodeJS, Postgres e TypeScript
