@@ -6,6 +6,7 @@ export default interface IUsersRepository {
   findAll(): Promise<User[]>;
   findById(user_id: string): Promise<User>;
   findByEmail(email: string): Promise<User>;
+  findByEmailExceptId(email: string, id: string): Promise<User>;
   add({ name, email, password, active }: IAddUserDTO): Promise<User>;
   update({ id, name, password, active, email }: IUpdateUserDTO): Promise<User>;
   remove(user_id: string): Promise<void>;

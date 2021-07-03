@@ -86,7 +86,10 @@ export default class UsersService {
       throw new ApiError('User does not exist', 404);
     }
 
-    const findUserInSameEmail = await this.usersRepository.findByEmail(email);
+    const findUserInSameEmail = await this.usersRepository.findByEmailExceptId(
+      email,
+      user_id,
+    );
     if (findUserInSameEmail) {
       throw new ApiError('This email is used by another user');
     }

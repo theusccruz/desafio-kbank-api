@@ -12,9 +12,11 @@ export default class UserRepository implements IUsersRepository {
 
   public async add({ active, name, email, password }: IAddUserDTO): Promise<User> {
     const id = uuidv4();
+
     const query =
       'INSERT INTO users(id, name, email, password, active) VALUES ($1, $2, $3, $4, $5) RETURNING *';
     const values = [id, name, email, password, active];
+
     try {
       const { rows } = await this.database.query(query, values);
       const user = rows[0] as User;
@@ -28,6 +30,20 @@ export default class UserRepository implements IUsersRepository {
   public async findByEmail(email: string): Promise<User> {
     const query = 'SELECT * FROM users WHERE email = $1';
     const values = [email];
+
+    try {
+      const { rows } = await this.database.query(query, values);
+      const user = rows[0] as User;
+
+      return user;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
+
+  public async findByEmailExceptId(email: string, id: string): Promise<User> {
+    const query = 'SELECT * FROM users WHERE email = $1 AND id <> $2';
+    const values = [email, id];
 
     try {
       const { rows } = await this.database.query(query, values);
